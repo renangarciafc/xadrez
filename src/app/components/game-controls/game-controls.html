@@ -1,0 +1,60 @@
+<div class="controls-card">
+  <div class="status-panel">
+    <h2 class="status-text" [class.game-over]="store.isGameOver()">
+      {{ store.statusMessage() }}
+    </h2>
+    <div class="game-info">
+      <span class="info-badge" [class.active]="store.isCheck()">
+        {{ store.isCheck() ? 'CHECK' : 'SAFE' }}
+      </span>
+      <span class="info-badge ai-badge" (click)="onToggleAi()" [class.ai-on]="store.isAiEnabled()">
+        AI: {{ store.isAiEnabled() ? 'ON' : 'OFF' }}
+      </span>
+    </div>
+    
+    @if (store.isAiEnabled()) {
+      <div class="ai-level-control">
+        <label for="ai-level">Força do Motor (Nível {{ store.aiLevel() }})</label>
+        <input 
+          type="range" 
+          id="ai-level" 
+          min="1" 
+          max="20" 
+          [value]="store.aiLevel()" 
+          (input)="onLevelChange($event)"
+        >
+      </div>
+    }
+  </div>
+
+  <div class="actions-panel">
+    <button class="btn btn-outline" (click)="onUndo()" [disabled]="store.history().length === 0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7v6h6"></path>
+        <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+      </svg>
+      Undo
+    </button>
+    <button class="btn btn-primary" (click)="onReset()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.92-10.24l5.08 5.08"></path>
+      </svg>
+      New Game
+    </button>
+  </div>
+  
+  <div class="history-panel">
+    <h3>Move History</h3>
+    <div class="history-list">
+      @for (move of store.history(); track $index) {
+        <div class="move-item">
+          <span class="move-num">{{ $index + 1 }}.</span>
+          <span class="move-san" [class.white]="move.color === 'w'">{{ move.san }}</span>
+        </div>
+      }
+      @if (store.history().length === 0) {
+        <div class="no-moves">No moves yet.</div>
+      }
+    </div>
+  </div>
+</div>

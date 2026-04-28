@@ -1,0 +1,32 @@
+<div class="board-container" [class.game-over]="store.isGameOver()">
+  <div class="board">
+    @for (row of board(); track rowIndex; let rowIndex = $index) {
+      @for (square of row; track colIndex; let colIndex = $index) {
+        
+        <div 
+          class="square" 
+          [class.dark]="isDarkSquare(rowIndex, colIndex)"
+          [class.light]="!isDarkSquare(rowIndex, colIndex)"
+          [class.highlight]="isHighlight(getSquareName(rowIndex, colIndex))"
+          [class.selected]="isSelected(getSquareName(rowIndex, colIndex))"
+          [class.last-move]="isLastMove(getSquareName(rowIndex, colIndex))"
+          (click)="onSquareClick(getSquareName(rowIndex, colIndex))"
+        >
+          
+          @if (square) {
+            <div class="piece" [innerHTML]="getPieceSvg(square)"></div>
+          }
+          
+          <!-- Coordinates Overlay -->
+          @if (colIndex === 0) {
+            <span class="coord rank">{{ 8 - rowIndex }}</span>
+          }
+          @if (rowIndex === 7) {
+            <span class="coord file">{{ files[colIndex] }}</span>
+          }
+
+        </div>
+      }
+    }
+  </div>
+</div>
