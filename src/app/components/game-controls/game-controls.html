@@ -11,7 +11,20 @@
         AI: {{ store.isAiEnabled() ? 'ON' : 'OFF' }}
       </span>
     </div>
+
+    @if (store.openingName()) {
+      <div class="opening-badge">
+        📚 {{ store.openingName() }}
+      </div>
+    }
     
+    @if (store.coachMessage()) {
+      <div class="coach-panel">
+        <div class="coach-avatar">🤖</div>
+        <div class="coach-bubble">{{ store.coachMessage() }}</div>
+      </div>
+    }
+
     @if (store.isAiEnabled()) {
       <div class="ai-level-control">
         <label for="ai-level">Força do Motor (Nível {{ store.aiLevel() }})</label>
@@ -40,6 +53,12 @@
         <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.92-10.24l5.08 5.08"></path>
       </svg>
       New Game
+    </button>
+    <button class="btn btn-outline" (click)="onMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 18l-6-6 6-6"></path>
+      </svg>
+      Menu
     </button>
   </div>
   

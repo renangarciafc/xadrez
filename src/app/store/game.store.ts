@@ -23,6 +23,10 @@ export interface GameState {
   aiColor: PlayerColor;
   lastMove: { from: string; to: string } | null;
   aiLevel: number; // 1 to 20
+  theme: string; // 'glass', 'wood', 'midnight'
+  coachMessage: string | null;
+  openingName: string | null;
+  geminiApiKey: string | null;
 }
 
 const initialState: GameState = {
@@ -36,7 +40,11 @@ const initialState: GameState = {
   isAiEnabled: true,
   aiColor: 'b',
   lastMove: null,
-  aiLevel: 10 // Padrão: nível 10
+  aiLevel: 10, // Padrão: nível 10
+  theme: 'glass',
+  coachMessage: null,
+  openingName: null,
+  geminiApiKey: typeof localStorage !== 'undefined' ? localStorage.getItem('geminiApiKey') : null
 };
 
 export const GameStore = signalStore(
@@ -63,8 +71,28 @@ export const GameStore = signalStore(
     setAiLevel(level: number) {
       patchState(store, { aiLevel: level });
     },
+    setTheme(theme: string) {
+      // Aplica a classe no body para refletir no CSS global
+      document.body.className = '';
+      if (theme !== 'glass') {
+        document.body.classList.add(`theme-${theme}`);
+      }
+      patchState(store, { theme });
+    },
+    setCoachMessage(msg: string | null) {
+      patchState(store, { coachMessage: msg });
+    },
     resetGame(fen: string) {
       patchState(store, { ...initialState, fen, isAiEnabled: store.isAiEnabled() });
+    },
+    updateOpening(openingName: string | null) {
+      patchState(store, { openingName });
+    },
+    setGeminiApiKey(key: string) {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('geminiApiKey', key);
+      }
+      patchState(store, { geminiApiKey: key });
     }
   }))
 );

@@ -1,15 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
+:root {
+  // Default (Glassmorphism Neon)
+  --bg-gradient: radial-gradient(circle at 10% 20%, rgb(31, 35, 46) 0%, rgb(18, 20, 24) 90%);
+  --board-light: rgba(255, 255, 255, 0.15);
+  --board-dark: rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(30, 33, 40, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  --accent-color: #00f2fe;
+}
+
+body.theme-wood {
+  --bg-gradient: radial-gradient(circle at 50% 50%, rgb(78, 52, 46) 0%, rgb(30, 20, 15) 100%);
+  --board-light: #f0d9b5;
+  --board-dark: #b58863;
+  --glass-bg: rgba(62, 39, 35, 0.9);
+  --glass-border: rgba(141, 110, 99, 0.5);
+  --text-gradient: linear-gradient(135deg, #ffcc80 0%, #ffab40 100%);
+  --accent-color: #ffb74d;
+}
+
+body.theme-midnight {
+  --bg-gradient: radial-gradient(circle at 10% 20%, rgb(10, 12, 16) 0%, rgb(2, 4, 8) 100%);
+  --board-light: #6272a4;
+  --board-dark: #282a36;
+  --glass-bg: rgba(40, 42, 54, 0.8);
+  --glass-border: rgba(98, 114, 164, 0.3);
+  --text-gradient: linear-gradient(135deg, #bd93f9 0%, #ff79c6 100%);
+  --accent-color: #bd93f9;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   
-  // Premium Deep Dark Gradient Background
-  background: radial-gradient(circle at 10% 20%, rgb(31, 35, 46) 0%, rgb(18, 20, 24) 90%);
+  background: var(--bg-gradient);
   color: #ffffff;
   overflow-x: hidden;
+  transition: background 0.5s ease;
 }
 
 // Custom scrollbar

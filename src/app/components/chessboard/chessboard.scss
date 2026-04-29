@@ -36,13 +36,13 @@
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
 
-  // Modern Dark Theme Colors
+  // Modern Theme Colors
   &.light {
-    background-color: #3b3f46;
+    background-color: var(--board-light);
   }
   
   &.dark {
-    background-color: #24272e;
+    background-color: var(--board-dark);
   }
 
   &.highlight {

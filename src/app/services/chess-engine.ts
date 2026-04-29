@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Chess, Move as ChessJsMove } from 'chess.js';
 import { GameStore, PlayerColor } from '../store/game.store';
 import { StockfishService } from './stockfish.service';
+import { CoachService } from './coach.service';
+import { OpeningBookService } from './opening-book.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,8 @@ export class ChessEngineService {
   private chess = new Chess();
   private store = inject(GameStore);
   private stockfish = inject(StockfishService);
+  private coach = inject(CoachService);
+  private openingBook = inject(OpeningBookService);
 
   constructor() {
     this.syncState();
@@ -38,6 +42,14 @@ export class ChessEngineService {
       const move = this.chess.move({ from, to, promotion });
       if (move) {
         this.syncState(move);
+        
+        // Pede ao treinador para analisar o lance do humano
+        this.store.setCoachMessage(null); // Limpa a msg antiga
+        this.coach.analyzeMove(this.chess.fen(), move.color, move.san)
+          .then(msg => {
+             if (msg) this.store.setCoachMessage(msg);
+          });
+
         this.checkAiTurn();
         return true;
       }
@@ -82,6 +94,12 @@ export class ChessEngineService {
       })),
       lastMove: lastMoveObj ? { from: lastMoveObj.from, to: lastMoveObj.to } : null
     });
+
+    // Atualiza a abertura nas primeiras 10 jogadas
+    if (history.length <= 10) {
+      const opening = this.openingBook.identifyOpening(history.map(m => m.san));
+      this.store.updateOpening(opening);
+    }
   }
 
   private checkAiTurn() {

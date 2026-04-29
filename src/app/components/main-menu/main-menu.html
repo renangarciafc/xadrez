@@ -1,0 +1,43 @@
+<div class="menu-container">
+  <div class="menu-card">
+    <h1 class="title">Modern Chess</h1>
+    
+    <div class="settings-section">
+      <h3>Modo de Jogo</h3>
+      <div class="toggle-group">
+        <button class="toggle-btn" [class.active]="!store.isAiEnabled()" (click)="store.isAiEnabled() && toggleAi()">
+          PvP (Pass & Play)
+        </button>
+        <button class="toggle-btn" [class.active]="store.isAiEnabled()" (click)="!store.isAiEnabled() && toggleAi()">
+          vs Inteligência Artificial
+        </button>
+      </div>
+
+      @if (store.isAiEnabled()) {
+        <div class="ai-level">
+          <label>Força do Stockfish: Nível {{ store.aiLevel() }}</label>
+          <input type="range" min="1" max="20" [value]="store.aiLevel()" (input)="setAiLevel($event)">
+        </div>
+      }
+    </div>
+
+    <div class="settings-section">
+      <h3>Tema Visual</h3>
+      <div class="theme-grid">
+        @for (theme of themes; track theme.id) {
+          <button class="theme-btn" [class.active]="store.theme() === theme.id" (click)="setTheme(theme.id)">
+            {{ theme.name }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Treinador IA (Opcional)</h3>
+      <p class="subtitle">Cole sua chave gratuita do Google Gemini para o treinador falar com você. O jogo funciona offline sem ela.</p>
+      <input type="password" class="api-key-input" placeholder="AIzaSy..." [value]="store.geminiApiKey() || ''" (input)="setApiKey($event)">
+    </div>
+
+    <button class="play-btn" (click)="startGame()">INICIAR PARTIDA</button>
+  </div>
+</div>

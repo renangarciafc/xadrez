@@ -3,10 +3,10 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: 2rem;
-  background: rgba(30, 33, 40, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
   width: 100%;
@@ -26,7 +26,7 @@
     font-size: 1.8rem;
     font-weight: 700;
     margin: 0 0 1rem;
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    background: var(--text-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
@@ -69,12 +69,24 @@
       }
       
       &.ai-on {
-        background: rgba(0, 242, 254, 0.2);
+        background: rgba(0, 242, 254, 0.2); // Mantemos rgba local ou extraímos a cor base? Vamos usar o var(--accent-color) onde possível, mas para rgba o SCSS exige hacks ou variáveis de r, g, b. Por enquanto, a gente pode deixar o neon padrão para a IA, ou usar a cor de destaque. Como o tema wood usa laranja, deixarei o neon padrão para o badge da IA.
         border-color: rgba(0, 242, 254, 0.5);
         color: #00f2fe;
         box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
       }
     }
+  }
+
+  .opening-badge {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeIn 0.5s ease;
   }
 
   .ai-level-control {
@@ -99,10 +111,10 @@
         height: 16px;
         width: 16px;
         border-radius: 50%;
-        background: #00f2fe;
+        background: var(--accent-color);
         cursor: pointer;
         margin-top: -6px;
-        box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        box-shadow: 0 0 10px var(--accent-color);
       }
 
       &::-webkit-slider-runnable-track {
@@ -118,6 +130,56 @@
       }
     }
   }
+
+  .coach-panel {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--accent-color);
+    animation: slideIn 0.3s ease-out;
+
+    .coach-avatar {
+      font-size: 2rem;
+      background: var(--glass-bg);
+      padding: 0.5rem;
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--accent-color);
+    }
+
+    .coach-bubble {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.8rem;
+      border-radius: 0 12px 12px 12px;
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 10px;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 8px solid rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .actions-panel {
