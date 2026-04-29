@@ -1,59 +1,70 @@
-# ChessApp
+# ♟️ Modern Chess App 2.0
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+Uma aplicação de Xadrez moderna, responsiva e esteticamente deslumbrante construída com **Angular 17+** (Signals & Standalone Components) e **NgRx SignalStore**. O projeto traz a potência do motor **Stockfish** rodando nativamente no navegador, integrado a um Treinador de Inteligência Artificial usando o **Google Gemini**.
 
-## Development server
+---
 
-To start a local development server, run:
+## ✨ Features Principais
 
-```bash
-ng serve
-```
+*   **🕹️ Modos de Jogo:** Jogue contra um amigo no mesmo dispositivo (Pass & Play) ou contra a Inteligência Artificial.
+*   **🧠 Stockfish Engine:** Integração com o motor profissional `stockfish.js` rodando em um Web Worker para não travar a interface. Dificuldade escalável através de um slider (Nível 1 a 20).
+*   **🎨 Sistema de Temas Dinâmico:** Troque o visual do jogo instantaneamente sem recarregar a página. Temas inclusos:
+    *   *Neon Glass* (Padrão cibernético com Glassmorphism)
+    *   *Madeira Clássica* (Tons orgânicos e tradicionais)
+    *   *Meia-Noite* (Tons escuros e roxos no estilo Dracula)
+*   **🤖 Treinador IA Sarcástico (Gemini API):** Se você cometer um Erro Crasso (Blunder) ou fizer um Lance Brilhante, o treinador comentará o lance em linguagem natural. (Configurável via chave de API na UI).
+*   **📚 Livro de Aberturas:** O jogo identifica e exibe o nome de aberturas clássicas (ex: *Defesa Siciliana*, *Ruy Lopez*) durante as primeiras rodadas.
+*   **🔄 Controles Completos:** Voltar jogada (Undo), Histórico de Lances, Detecção de Xeque/Mate e Reinício Rápido.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🚀 Como Executar Localmente
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Pré-requisitos
+*   [Node.js](https://nodejs.org/) (Versão 18+ recomendada)
+*   Angular CLI (`npm install -g @angular/cli`)
 
-```bash
-ng generate component component-name
-```
+### Instalação
+1. Clone o repositório:
+   ```bash
+   git clone <sua-url-do-github>
+   cd xadrez
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm start
+   ```
+4. Abra o navegador em `http://localhost:4200`.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
-```
+## 🔑 Configurando o Treinador IA (Google Gemini)
 
-## Building
+O Treinador Inteligente analisa matematicamente seus erros usando o Stockfish e gera broncas verbais usando a API do **Google Gemini**. 
+Para ativar o treinador inteligente:
 
-To build the project run:
+1. Gere uma chave de API gratuita no [Google AI Studio](https://aistudio.google.com/app/apikey).
+2. Abra o jogo (`http://localhost:4200/menu`).
+3. Cole a sua chave no campo **Treinador IA**.
+4. Inicie a partida!
 
-```bash
-ng build
-```
+> **Nota de Segurança:** Sua chave de API é salva apenas no `localStorage` do seu navegador. Ela **nunca** é escrita no código-fonte, garantindo que você possa fazer forks e commits no GitHub sem o risco de vazar suas credenciais!
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🛠️ Tecnologias Utilizadas
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+*   **Frontend:** Angular 17+ (Signals, Standalone Components, Router)
+*   **Gerenciamento de Estado:** `@ngrx/signals` (SignalStore)
+*   **Lógica de Xadrez:** `chess.js` (Validação de lances, geração de FEN)
+*   **Motor (Engine):** `stockfish.js` via Web Workers
+*   **Estilização:** SCSS (CSS Custom Properties para temas)
+*   **LLM:** Integração REST direta com Google Gemini 2.5 Flash
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Feito com 💙 para a comunidade de xadrez!
